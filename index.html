@@ -49,7 +49,10 @@
             if (pos >= questions.length || count === 0) {
                 test.innerHTML = "<h2>You got " + correct + " of " + questions.length + " questions correct</h2>";
                 get("test_status").innerHTML = "Test completed! Add you Initials" ;
-                
+                var input = document.createElement("INPUT");
+                input.setAttribute("type", "text");
+                input.setAttribute("value", "");
+                document.getElementById("test").appendChild(input);
                 
 
                 
