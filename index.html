@@ -4,32 +4,41 @@
 <head>
     <meta charset="utf-8" />
     <title>Quiz</title>
-    <h1 id="start">Start</h1>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 
-    <script type="text/javascript">
-        var count = 60;
+<body>
+    <header>JavaScript Quiz</header>
+    <div class="wrapper">
+
+        <h3 id="count"></h3>
+        <h2 id="test_status"></h2>
+        <div id="test"></div>
+        <script type="text/javascript">
+
+        var count = 40;
         var interval = setInterval(function () {
             document.getElementById('count').innerHTML = count;
             count--;
             if (count === 0) {
                 clearInterval(interval);
-                document.getElementById('count').innerHTML = 'Done';
+                document.getElementById('count').innerHTML = 'Out of Time';
+
             }
         }, 1000);
-        // pos is position of where the user in the test or which question they're up to
+
         var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, chD, correct = 0;
-        // this is a multidimensional array with 4 inner array elements with 5 elements inside them
-        // if you don't want answers viewable in the code, then you should use PHP and mySQL database
+
         var questions = [
             ["What are good resources for learning Javascript?", "W3Schools", "MDN", "Free Code Camp", "All of the Above", "D"],
             ["What is the difference between a prompt and alert?", " Alert have user input and prompt don't",
                 "They are the same thing", " Prompts display the text in the html", " Prompts require user input and Alerts don't", "D"],
-            ["In JavaScript, what is a block of code called that is used to perform a specific task?","Function",
-            "Variable","Declaration","String","A"],
-            ["Which of the following is the proper way to say and in JS?","AND","&&","&","+","B"],
-            ["Where do we put the script tag?","head","body","header","footer","B"],
-            ["How do you comment in Javascript?","/*","//","!--","Both A and B","D"]
-                ];
+            ["In JavaScript, what is a block of code called that is used to perform a specific task?", "Function",
+                "Variable", "Declaration", "String", "A"],
+            ["Which of the following is the proper way to say and in JS?", "AND", "&&", "&", "+", "B"],
+            ["Where do we put the script tag?", "head", "body", "header", "footer", "B"],
+            ["How do you comment in Javascript?", "/*", "//", "!--", "Both A and B", "D"]
+        ];
 
         // this get function is short for the getElementById function  
         function get(x) {
@@ -37,9 +46,13 @@
         }
         function renderQuestion() {
             test = get("test");
-            if (pos >= questions.length) {
+            if (pos >= questions.length || count === 0) {
                 test.innerHTML = "<h2>You got " + correct + " of " + questions.length + " questions correct</h2>";
-                get("test_status").innerHTML = "Test completed";
+                get("test_status").innerHTML = "Test completed! Add you Initials" ;
+                
+                
+
+                
                 // resets the variable to allow users to restart the test
                 pos = 0;
                 correct = 0;
@@ -61,31 +74,32 @@
             test.innerHTML += "<input type='radio' name='choices' value='D'> " + chD + "<br><br>";
             test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
         }
-        function checkAnswer() {
-            // use getElementsByName because we have an array which it will loop through
-            choices = document.getElementsByName("choices");
-            for (var i = 0; i < choices.length; i++) {
-                if (choices[i].checked) {
-                    choice = choices[i].value;
-                }
-            }
-            // checks if answer matches the correct choice
-            if (choice == questions[pos][5]) {
-                //each time there is a correct answer this value increases
-                correct++;
-            }
-            // changes position of which character user is on
-            pos++;
-            // then the renderQuestion function runs again to go to next question
-            renderQuestion();
-        }
-        window.addEventListener("load", renderQuestion, false);
-    </script>
-</head>
 
-<body>
-    <h2 id="test_status"></h2>
-    <div id="test"></div>
+            function checkAnswer() {
+                // use getElementsByName because we have an array which it will loop through
+                choices = document.getElementsByName("choices");
+                for (var i = 0; i < choices.length; i++) {
+                    if (choices[i].checked) {
+                        choice = choices[i].value;
+                    }
+                }
+                // checks if answer matches the correct choice
+                if (choice == questions[pos][5]) {
+                    //each time there is a correct answer this value increases
+                    correct++;
+                }
+                else {
+                    count = count - 5
+                }
+                // changes position of which character user is on
+                pos++;
+                // then the renderQuestion function runs again to go to next question
+                renderQuestion();
+            }
+              window.addEventListener("load", renderQuestion, false);
+
+    </script>
+            </div>
 </body>
 
 </html>

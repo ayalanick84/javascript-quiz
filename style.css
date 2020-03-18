@@ -1,0 +1,11 @@
+header {
+    font-size: xx-large;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.wrapper {
+    margin: 0 auto;
+    width: 60%;
+    background-color: aqua;
+}
